@@ -2,14 +2,24 @@
 
 This repository contains a no-build static site for GitHub Pages. It is designed to publish cleanly from the root of the `main` branch at:
 
-`https://tahaibrahimsiddiqui.github.io/personal_website/`
+`https://tahaibrahim.in/`
 
 ## Publishing
 
 1. Push changes to the `main` branch.
-2. In the GitHub repository settings, open `Pages`.
-3. Set the source to `Deploy from a branch`.
-4. Choose `main` and the `/ (root)` folder.
+2. GitHub Actions runs `.github/workflows/deploy.yml`.
+3. The workflow deploys the static artifact to GitHub Pages.
+
+## AdSense
+
+The site has a lightweight AdSense loader, but it stays inactive until a publisher ID is configured.
+
+Set these under **Settings -> Secrets and variables -> Actions -> Variables**:
+
+- `NEXT_PUBLIC_ADSENSE_CLIENT`: `ca-pub-...`
+- `ADSENSE_PUBLISHER_ID`: `pub-...` or the numeric publisher id
+
+The workflow writes `assets/js/adsense-config.js` and root `ads.txt` during deployment. Google expects `ads.txt` at `https://tahaibrahim.in/ads.txt`.
 
 ## Updating content
 
