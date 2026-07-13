@@ -1,0 +1,69 @@
+name: Deploy static site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare Pages artifact
+        shell: bash
+        env:
+          ADSENSE_CLIENT: ${{ vars.NEXT_PUBLIC_ADSENSE_CLIENT || secrets.NEXT_PUBLIC_ADSENSE_CLIENT }}
+          ADSENSE_PUBLISHER_ID: ${{ vars.ADSENSE_PUBLISHER_ID || secrets.ADSENSE_PUBLISHER_ID }}
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+          git ls-files -z | tar --null -T - -cf - | tar -C _site -xf -
+
+          client="${ADSENSE_CLIENT:-}"
+          publisher="${ADSENSE_PUBLISHER_ID:-}"
+
+          if [[ -z "$client" && -n "$publisher" ]]; then
+            normalized="${publisher#ca-}"
+            normalized="${normalized#pub-}"
+            client="ca-pub-${normalized}"
+          fi
+
+          mkdir -p _site/assets/js
+          if [[ -n "$client" ]]; then
+            ADSENSE_CLIENT="$client" node -e 'process.stdout.write("window.TAHA_ADSENSE_CLIENT = " + JSON.stringify(process.env.ADSENSE_CLIENT) + ";\n")' > _site/assets/js/adsense-config.js
+          fi
+
+          if [[ -z "$publisher" && -n "$client" ]]; then
+            publisher="${client#ca-}"
+          fi
+
+          if [[ -n "$publisher" ]]; then
+            publisher="${publisher#ca-}"
+            publisher="${publisher#pub-}"
+            printf 'google.com, pub-%s, DIRECT, f08c47fec0942fa0\n' "$publisher" > _site/ads.txt
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
