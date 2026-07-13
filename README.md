@@ -19,7 +19,7 @@ Set these under **Settings -> Secrets and variables -> Actions -> Variables**:
 - `NEXT_PUBLIC_ADSENSE_CLIENT`: `ca-pub-...`
 - `ADSENSE_PUBLISHER_ID`: `pub-...` or the numeric publisher id
 
-The workflow writes root `ads.txt` during deployment. Google expects `ads.txt` at `https://tahaibrahim.in/ads.txt`.
+The repository includes root `ads.txt`, and the workflow refreshes it during deployment when `ADSENSE_PUBLISHER_ID` is configured. Google expects `ads.txt` at `https://tahaibrahim.in/ads.txt`.
 
 ## Updating content
 
