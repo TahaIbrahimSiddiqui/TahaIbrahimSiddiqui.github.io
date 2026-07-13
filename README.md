@@ -12,14 +12,14 @@ This repository contains a no-build static site for GitHub Pages. It is designed
 
 ## AdSense
 
-The site has a lightweight AdSense loader, but it stays inactive until a publisher ID is configured.
+The site includes the AdSense script directly in each HTML page.
 
 Set these under **Settings -> Secrets and variables -> Actions -> Variables**:
 
 - `NEXT_PUBLIC_ADSENSE_CLIENT`: `ca-pub-...`
 - `ADSENSE_PUBLISHER_ID`: `pub-...` or the numeric publisher id
 
-The workflow writes `assets/js/adsense-config.js` and root `ads.txt` during deployment. Google expects `ads.txt` at `https://tahaibrahim.in/ads.txt`.
+The workflow writes root `ads.txt` during deployment. Google expects `ads.txt` at `https://tahaibrahim.in/ads.txt`.
 
 ## Updating content
 

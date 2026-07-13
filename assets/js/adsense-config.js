@@ -1,1 +1,0 @@
-window.TAHA_ADSENSE_CLIENT = window.TAHA_ADSENSE_CLIENT || "";
