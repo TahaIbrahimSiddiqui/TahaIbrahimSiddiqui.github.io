@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Enable HTTPS when certificate exists
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.PAGES_ADMIN_TOKEN || github.token }}
           REPO: ${{ github.repository }}
         shell: bash
         run: |
@@ -35,6 +35,11 @@ jobs:
             exit 0
           fi
 
+          if [[ "$certificate" == "null" ]]; then
+            echo "GitHub has not issued the custom-domain certificate yet; retrying on the next schedule."
+            exit 0
+          fi
+
           set +e
           response="$(gh api --method PUT "repos/${REPO}/pages" -f https_enforced=true 2>&1)"
           status=$?
@@ -48,6 +53,11 @@ jobs:
 
           if grep -qi "certificate does not exist yet" <<< "$response"; then
             echo "GitHub has not issued the custom-domain certificate yet; retrying on the next schedule."
+            exit 0
+          fi
+
+          if grep -qi "Resource not accessible by integration" <<< "$response"; then
+            echo "The default GitHub Actions token cannot update Pages settings. Add a PAGES_ADMIN_TOKEN secret or enable HTTPS manually once the certificate exists."
             exit 0
           fi
 
