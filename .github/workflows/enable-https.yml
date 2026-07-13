@@ -1,0 +1,55 @@
+name: Enable HTTPS
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+
+jobs:
+  enable-https:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable HTTPS when certificate exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          page_json="$(gh api "repos/${REPO}/pages")"
+          cname="$(jq -r '.cname // ""' <<< "$page_json")"
+          enforced="$(jq -r '.https_enforced' <<< "$page_json")"
+          certificate="$(jq -c '.https_certificate // null' <<< "$page_json")"
+
+          echo "cname=${cname}"
+          echo "https_enforced=${enforced}"
+          echo "https_certificate=${certificate}"
+
+          if [[ "$enforced" == "true" ]]; then
+            echo "HTTPS is already enforced."
+            exit 0
+          fi
+
+          set +e
+          response="$(gh api --method PUT "repos/${REPO}/pages" -f https_enforced=true 2>&1)"
+          status=$?
+          set -e
+
+          if [[ $status -eq 0 ]]; then
+            echo "$response"
+            echo "HTTPS enforcement enabled."
+            exit 0
+          fi
+
+          if grep -qi "certificate does not exist yet" <<< "$response"; then
+            echo "GitHub has not issued the custom-domain certificate yet; retrying on the next schedule."
+            exit 0
+          fi
+
+          echo "$response" >&2
+          exit "$status"
