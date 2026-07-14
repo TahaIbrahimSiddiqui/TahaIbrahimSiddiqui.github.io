@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tahaibrahim.in/sitemap.xml
+Sitemap: https://tahaibrahim.in/guidetoindiandata/sitemap.xml

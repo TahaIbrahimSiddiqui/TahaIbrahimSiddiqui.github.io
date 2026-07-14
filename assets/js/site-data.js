@@ -570,16 +570,16 @@ export const siteData = {
     home: {
       title: "Taha Ibrahim Siddiqui",
       description:
-        "Research, public writing, fieldwork, and data by Taha Ibrahim Siddiqui."
+        "Empirical social science research, public scholarship, and fieldwork by Taha Ibrahim Siddiqui."
     },
     research: {
       title: "Research | Taha Ibrahim Siddiqui",
       description:
-        "Research papers, presentations, and current projects by Taha Ibrahim Siddiqui."
+        "Research papers, working papers, and conference presentations by Taha Ibrahim Siddiqui."
     },
     writing: {
       title: "Writing | Taha Ibrahim Siddiqui",
-      description: "Public scholarship and commentary by Taha Ibrahim Siddiqui."
+      description: "Op-eds and public scholarship by Taha Ibrahim Siddiqui."
     },
     reading: {
       title: "Reading | Taha Ibrahim Siddiqui",
@@ -588,7 +588,7 @@ export const siteData = {
     resources: {
       title: "Resources | Taha Ibrahim Siddiqui",
       description:
-        "Datasets, documents, and supporting materials connected to Taha Ibrahim Siddiqui's work."
+        "Data and resource links connected to Taha Ibrahim Siddiqui's research."
     }
   }
 };
