@@ -17,7 +17,7 @@ export const siteData = {
     { label: "Resources", href: "resources.html", page: "resources" },
     {
       label: "Guide to Indian Data",
-      href: "https://tahaibrahimsiddiqui.github.io/guidetoindiandata/",
+      href: "https://tahaibrahim.in/guidetoindiandata/",
       page: "india-data",
       external: true
     },
@@ -453,7 +453,7 @@ export const siteData = {
       type: "Public website",
       access: "Open access",
       note: "A living catalog of major Indian datasets—surveys, series, academic packages, and open portals—with access notes, variables, and how researchers use them.",
-      url: "https://tahaibrahimsiddiqui.github.io/guidetoindiandata/",
+      url: "https://tahaibrahim.in/guidetoindiandata/",
       image: "assets/images/datasets/india-map.svg",
       imageAlt: "Map of India used as the cover image for the Guide to Indian Data.",
       imageFit: "contain"
