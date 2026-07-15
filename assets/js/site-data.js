@@ -15,6 +15,7 @@ export const siteData = {
     { label: "Writing", href: "writing.html", page: "writing" },
     { label: "Reading", href: "reading.html", page: "reading" },
     { label: "Resources", href: "resources.html", page: "resources" },
+    { label: "Packages", href: "packages.html", page: "packages" },
     {
       label: "Guide to Indian Data",
       href: "https://tahaibrahim.in/guidetoindiandata/",
@@ -45,6 +46,10 @@ export const siteData = {
     resources: {
       title: "Data and documents",
       body: "Datasets, notes, and supporting documents connected to current work."
+    },
+    packages: {
+      title: "Packages",
+      body: "Open-source research tools and public data infrastructure I maintain."
     }
   },
   profile: {
@@ -511,12 +516,27 @@ export const siteData = {
       note: "Supporting agreement document linked from the public dataset page.",
       url: "https://docs.google.com/document/d/1hAVKwAQfp_E6BV6Y4eB8BQBvW0dfZ4cA4Fqm5JtFwF8/edit?usp=sharing"
     },
+  ],
+  packages: [
     {
-      title: "adminlineage",
-      type: "PyPI package",
-      access: "Open access",
-      note: "Python package that creates administrative crosswalks between datasets using artificial intelligence.",
-      url: "https://pypi.org/project/adminlineage/"
+      title: "AdminLineageAI",
+      packageName: "adminlineage",
+      type: "Python package",
+      access: "Open source",
+      note:
+        "AI-assisted administrative crosswalks for districts, subdistricts, states, and countries across datasets from different sources or time periods.",
+      url: "https://pypi.org/project/adminlineage/",
+      repositoryUrl: "https://github.com/TahaIbrahimSiddiqui/AdminLineageAI",
+      doiUrl: "https://doi.org/10.5281/zenodo.20126370",
+      install: "pip install adminlineage",
+      caveat:
+        "Experimental utility: treat crosswalks as assistive outputs and cross-verify important matches.",
+      highlights: [
+        "Handles spelling variants, language-specific forms, splits, mergers, and renames.",
+        "Generates evolution keys plus review artifacts in CSV, Parquet, and JSONL.",
+        "Supports hierarchical matching within scopes such as state or district.",
+        "Uses grounded Gemini adjudication, strict JSON output, and optional replay for reproducible reruns."
+      ]
     }
   ],
   gallery: [
@@ -589,6 +609,11 @@ export const siteData = {
       title: "Resources | Taha Ibrahim Siddiqui",
       description:
         "Data and resource links connected to Taha Ibrahim Siddiqui's research."
+    },
+    packages: {
+      title: "Packages | Taha Ibrahim Siddiqui",
+      description:
+        "Open-source research packages and public data tools by Taha Ibrahim Siddiqui."
     }
   }
 };
